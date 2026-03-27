@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KharchaTracker | Smart Expense Tracker</title>
+  <meta name="description" content="KharchaTracker is a smart expense tracker for managing income, expenses, budgets, and category insights in one clean dashboard.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#163631">
+  <meta property="og:title" content="KharchaTracker | Smart Expense Tracker">
+  <meta property="og:description" content="Track expenses, manage budgets, and monitor savings with a polished personal finance dashboard.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="auth-shell" id="authShell">
+    <div class="auth-backdrop"></div>
+    <div class="auth-card panel">
+      <div class="auth-copy">
+        <p class="section-tag">Welcome to KharchaTracker</p>
+        <h2>Build your expense account before you enter the dashboard.</h2>
+        <p class="hero-text">
+          New users can create an account in seconds. Existing users can log in and continue from their own saved finance history.
+        </p>
+        <div class="hero-stats">
+          <div>
+            <span class="stat-label">Personal workspace</span>
+            <strong>Separate user data</strong>
+          </div>
+          <div>
+            <span class="stat-label">Session control</span>
+            <strong>Login required</strong>
+          </div>
+          <div>
+            <span class="stat-label">Storage mode</span>
+            <strong>Browser local</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-panel">
+        <div class="field-row segmented-control auth-toggle" role="tablist" aria-label="Authentication type">
+          <button type="button" class="segment active auth-segment" data-auth-mode="signup">Create account</button>
+          <button type="button" class="segment auth-segment" data-auth-mode="login">Login</button>
+        </div>
+
+        <p class="auth-heading" id="authHeading">Create your account</p>
+        <p class="auth-subtext" id="authSubtext">Set your name, email, and password to unlock your tracker.</p>
+        <p class="auth-message" id="authMessage" aria-live="polite"></p>
+
+        <form id="authForm" class="transaction-form">
+          <label id="nameField">
+            <span>Full Name</span>
+            <input type="text" id="authName" placeholder="Jiten Kumar">
+          </label>
+
+          <label>
+            <span>Email</span>
+            <input type="email" id="authEmail" placeholder="name@example.com" required>
+          </label>
+
+          <label>
+            <span>Password</span>
+            <input type="password" id="authPassword" placeholder="Minimum 6 characters" required>
+          </label>
+
+          <button type="submit" class="primary-button" id="authSubmit">Create account</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-shell app-shell hidden" id="appShell">
+    <header class="hero">
+      <nav class="topbar">
+        <div class="brand">
+          <div class="brand-mark">K</div>
+          <div>
+            <p class="eyebrow">Personal Finance Studio</p>
+            <h1>KharchaTracker</h1>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <div class="hero-badges">
+            <span>Live Budget Health</span>
+            <span>Secure Local Storage</span>
+          </div>
+          <div class="user-chip">
+            <div>
+              <span class="stat-label">Signed in as</span>
+              <strong id="currentUserName">Guest</strong>
+            </div>
+            <button class="ghost-button" id="logoutButton" type="button">Logout</button>
+          </div>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy panel glass">
+          <p class="section-tag">Smart Spending Control</p>
+          <h2>Track every rupee with a dashboard that actually feels premium.</h2>
+          <p class="hero-text">
+            Add income and expenses, monitor category pressure, and stay ahead of your monthly budget with instant insights.
+          </p>
+          <div class="hero-stats">
+            <div>
+              <span class="stat-label">Monthly Budget</span>
+              <strong id="budgetValue">Rs 35,000</strong>
+            </div>
+            <div>
+              <span class="stat-label">Available Balance</span>
+              <strong id="heroBalance">Rs 0</strong>
+            </div>
+            <div>
+              <span class="stat-label">This Month Spend</span>
+              <strong id="heroSpend">Rs 0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card panel dark-panel">
+          <p class="section-tag">Budget Pulse</p>
+          <div class="budget-ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-track" cx="60" cy="60" r="48"></circle>
+              <circle class="ring-fill" id="budgetRing" cx="60" cy="60" r="48"></circle>
+            </svg>
+            <div class="ring-content">
+              <strong id="budgetPercent">0%</strong>
+              <span>Spent</span>
+            </div>
+          </div>
+          <div class="budget-copy">
+            <strong id="budgetStatus">Budget is under control.</strong>
+            <p id="budgetMessage">Start logging transactions to see your monthly momentum.</p>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main class="dashboard">
+      <section class="metrics-grid">
+        <article class="metric-card panel">
+          <p>Total Balance</p>
+          <h3 id="totalBalance">Rs 0</h3>
+          <span class="metric-note">Income minus expenses</span>
+        </article>
+        <article class="metric-card panel accent-income">
+          <p>Total Income</p>
+          <h3 id="totalIncome">Rs 0</h3>
+          <span class="metric-note">All income records</span>
+        </article>
+        <article class="metric-card panel accent-expense">
+          <p>Total Expenses</p>
+          <h3 id="totalExpense">Rs 0</h3>
+          <span class="metric-note">All outgoing payments</span>
+        </article>
+        <article class="metric-card panel accent-savings">
+          <p>Savings Rate</p>
+          <h3 id="savingsRate">0%</h3>
+          <span class="metric-note">Percentage of income retained</span>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">New Entry</p>
+              <h3>Add transaction</h3>
+            </div>
+            <button class="ghost-button" id="loadDemo">Load demo data</button>
+          </div>
+
+          <form id="transactionForm" class="transaction-form">
+            <div class="field-row segmented-control" role="tablist" aria-label="Transaction type">
+              <button type="button" class="segment active" data-type="expense">Expense</button>
+              <button type="button" class="segment" data-type="income">Income</button>
+            </div>
+
+            <label>
+              <span>Title</span>
+              <input type="text" id="title" placeholder="Groceries, Salary, Rent" required>
+            </label>
+
+            <div class="field-grid">
+              <label>
+                <span>Amount</span>
+                <input type="number" id="amount" min="1" step="0.01" placeholder="2500" required>
+              </label>
+              <label>
+                <span>Date</span>
+                <input type="date" id="date" required>
+              </label>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>Category</span>
+                <select id="category" required></select>
+              </label>
+              <label>
+                <span>Payment Mode</span>
+                <select id="paymentMode">
+                  <option value="UPI">UPI</option>
+                  <option value="Card">Card</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>Note</span>
+              <textarea id="note" rows="3" placeholder="Optional detail"></textarea>
+            </label>
+
+            <div class="field-grid">
+              <label>
+                <span>Monthly Budget</span>
+                <input type="number" id="budgetInput" min="1000" step="100" placeholder="35000">
+              </label>
+              <div class="submit-wrap">
+                <button type="submit" class="primary-button">Save transaction</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel insights-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">Analytics</p>
+              <h3>Spending overview</h3>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <div id="categoryBars" class="bars"></div>
+          </div>
+          <div class="insight-cards">
+            <article class="insight-card">
+              <span>Top category</span>
+              <strong id="topCategory">None yet</strong>
+            </article>
+            <article class="insight-card">
+              <span>Largest transaction</span>
+              <strong id="largestTransaction">Rs 0</strong>
+            </article>
+            <article class="insight-card">
+              <span>Transactions</span>
+              <strong id="transactionCount">0 records</strong>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="content-grid lower-grid">
+        <section class="panel transactions-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">Ledger</p>
+              <h3>Recent transactions</h3>
+            </div>
+            <div class="filter-row">
+              <select id="filterType">
+                <option value="all">All types</option>
+                <option value="expense">Expenses</option>
+                <option value="income">Income</option>
+              </select>
+              <select id="filterCategory">
+                <option value="all">All categories</option>
+              </select>
+            </div>
+          </div>
+          <div id="transactionList" class="transaction-list"></div>
+        </section>
+
+        <section class="panel tips-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">Advisor</p>
+              <h3>Monthly guidance</h3>
+            </div>
+          </div>
+          <div id="adviceList" class="advice-list"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <template id="transactionTemplate">
+    <article class="transaction-item">
+      <div>
+        <div class="transaction-top">
+          <strong class="transaction-title"></strong>
+          <span class="transaction-badge"></span>
+        </div>
+        <p class="transaction-meta"></p>
+        <p class="transaction-note"></p>
+      </div>
+      <div class="transaction-side">
+        <strong class="transaction-amount"></strong>
+        <button class="delete-button" type="button">Delete</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
