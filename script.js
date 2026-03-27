@@ -211,7 +211,7 @@ function restoreSession() {
 }
 
 function initializeTrackerUI() {
-  elements.date.value = new Date().toISOString().split("T")[0];
+  elements.date.value = getTodayLocal();
   elements.budgetInput.value = state.tracker.budget;
   elements.currentUserName.textContent = state.currentUser.name;
   updateSegments();
@@ -269,9 +269,10 @@ function handleSubmit(event) {
   state.tracker.budget = budget;
   persistCurrentUserState();
   elements.transactionForm.reset();
-  elements.date.value = new Date().toISOString().split("T")[0];
+  elements.date.value = getTodayLocal();
   elements.budgetInput.value = state.tracker.budget;
   populateCategorySelect();
+  populateFilterCategories();
   render();
 }
 
@@ -316,6 +317,7 @@ function populateFilterCategories() {
 
 function render() {
   updateSegments();
+  populateFilterCategories();
   renderSummary();
   renderBars();
   renderTransactions();
@@ -504,7 +506,8 @@ function getFilteredTransactions() {
 function loadUsers() {
   try {
     const raw = localStorage.getItem(USERS_KEY);
-    return raw ? JSON.parse(raw) : {};
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" ? parsed : {};
   } catch {
     return {};
   }
@@ -566,4 +569,12 @@ function formatCurrency(amount) {
 
 function formatDate(value) {
   return new Intl.DateTimeFormat("en-IN", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value));
+}
+
+function getTodayLocal() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
