@@ -38,6 +38,45 @@ body::before {
 
 .hidden { display: none; }
 
+.runtime-banner {
+  position: sticky;
+  top: 14px;
+  z-index: 20;
+  width: min(1200px, calc(100% - 32px));
+  margin: 18px auto 0;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-radius: 22px;
+  background: rgba(255, 248, 239, 0.95);
+  border: 1px solid rgba(185, 77, 63, 0.24);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.runtime-banner strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.runtime-banner p {
+  color: var(--muted);
+}
+
+.runtime-actions,
+.recovery-actions,
+.reliability-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.runtime-actions,
+.recovery-actions {
+  grid-template-columns: repeat(2, minmax(0, max-content));
+}
+
 .auth-shell {
   position: relative;
   min-height: 100vh;
@@ -317,8 +356,8 @@ h3 { font-size: 1.3rem; }
   margin-bottom: 20px;
 }
 
-.lower-grid { grid-template-columns: 1.35fr 0.65fr; }
-.form-panel, .insights-panel, .transactions-panel, .tips-panel { padding: 26px; }
+.lower-grid { grid-template-columns: 1.1fr 0.65fr 0.75fr; }
+.form-panel, .insights-panel, .transactions-panel, .tips-panel, .reliability-panel { padding: 26px; }
 
 .panel-heading {
   display: flex;
@@ -398,6 +437,8 @@ textarea { resize: vertical; }
 
 .chart-wrap { min-height: 280px; }
 .bars, .insight-cards, .advice-list, .transaction-list { display: grid; gap: 14px; }
+.reliability-grid { grid-template-columns: 1fr; margin-bottom: 18px; }
+.reliability-copy { margin: 0 0 18px; max-width: none; }
 
 .bar-row {
   display: grid;
@@ -461,17 +502,27 @@ textarea { resize: vertical; }
   border: 1px dashed rgba(31, 43, 38, 0.16);
 }
 
+.recovery-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
 @media (max-width: 1024px) {
   .hero-grid, .content-grid, .lower-grid, .metrics-grid, .auth-card { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {
   .page-shell { width: min(100% - 20px, 1200px); padding-top: 18px; }
-  .topbar, .panel-heading, .hero-stats, .field-grid, .filter-row, .bar-row { grid-template-columns: 1fr; }
+  .topbar, .panel-heading, .hero-stats, .field-grid, .filter-row, .bar-row, .runtime-actions, .recovery-actions { grid-template-columns: 1fr; }
   .topbar, .panel-heading { align-items: start; }
-  .hero-copy, .dark-panel, .metric-card, .form-panel, .insights-panel, .transactions-panel, .tips-panel, .auth-copy, .auth-panel { padding: 22px; }
+  .hero-copy, .dark-panel, .metric-card, .form-panel, .insights-panel, .transactions-panel, .tips-panel, .reliability-panel, .auth-copy, .auth-panel { padding: 22px; }
   .transaction-item { grid-template-columns: 1fr; text-align: left; }
   .transaction-side { text-align: left; }
   .hero-actions, .user-chip { width: 100%; }
   .user-chip { justify-content: space-between; }
+  .runtime-banner {
+    width: min(100% - 20px, 1200px);
+    margin-top: 10px;
+    align-items: stretch;
+  }
 }

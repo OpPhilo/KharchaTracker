@@ -13,6 +13,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="runtime-banner hidden" id="runtimeBanner" role="alert">
+    <div>
+      <strong>Recovery tools are ready</strong>
+      <p id="runtimeBannerText">If the app hits a browser-side issue, you can restore the latest backup or reset the current account.</p>
+    </div>
+    <div class="runtime-actions">
+      <button class="ghost-button" id="restoreBackupButton" type="button">Restore backup</button>
+      <button class="ghost-button" id="dismissBannerButton" type="button">Dismiss</button>
+    </div>
+  </div>
+
   <section class="auth-shell" id="authShell">
     <div class="auth-backdrop"></div>
     <div class="auth-card panel">
@@ -283,6 +294,44 @@
             </div>
           </div>
           <div id="adviceList" class="advice-list"></div>
+        </section>
+
+        <section class="panel reliability-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">Reliability</p>
+              <h3>Recovery and health</h3>
+            </div>
+          </div>
+
+          <div class="reliability-grid">
+            <article class="insight-card">
+              <span>Runtime status</span>
+              <strong id="healthStatus">Healthy</strong>
+            </article>
+            <article class="insight-card">
+              <span>Latest backup</span>
+              <strong id="lastBackupAt">Not created yet</strong>
+            </article>
+            <article class="insight-card">
+              <span>Error logs</span>
+              <strong id="errorCount">0 entries</strong>
+            </article>
+          </div>
+
+          <p class="hero-text reliability-copy" id="healthDescription">
+            The app keeps local recovery snapshots in your browser so recent data can be restored if storage gets corrupted.
+          </p>
+
+          <div class="recovery-actions">
+            <button class="ghost-button" id="exportBackupButton" type="button">Export backup</button>
+            <button class="ghost-button" id="importBackupButton" type="button">Import backup</button>
+            <button class="ghost-button" id="clearCrashLogButton" type="button">Clear logs</button>
+            <button class="ghost-button" id="resetAppButton" type="button">Reset current user</button>
+          </div>
+
+          <input type="file" id="importBackupInput" accept="application/json" class="hidden">
+          <p class="auth-message" id="recoveryMessage" aria-live="polite"></p>
         </section>
       </section>
     </main>
